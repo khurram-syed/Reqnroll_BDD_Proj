@@ -19,11 +19,16 @@ public class BasePage
     public void ClickElement(By locator, int waitTime=2) =>
         _wait.GetVisibleElement(locator,waitTime).Click();
 
-    public void EnterText(By locator, string text)
+    public void EnterText(By locator, string text, int waitTime=2)
     {
-        var element = _wait.GetVisibleElement(locator);
+        var element = _wait.GetVisibleElement(locator,waitTime);
         element.Clear();
         element.SendKeys(text);
+    }
+
+        public string GetText(By locator, int waitTime=2)
+    {
+        return _wait.GetVisibleElement(locator,waitTime).Text;
     }
 
     public bool CheckElementDisplayed(By locator)
