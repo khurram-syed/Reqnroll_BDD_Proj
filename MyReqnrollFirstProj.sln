@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyReqnrollFirstProj", "MyReqnrollFirstProj.csproj", "{F8322240-7662-8E8F-7E32-3F262FB3330B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8322240-7662-8E8F-7E32-3F262FB3330B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8322240-7662-8E8F-7E32-3F262FB3330B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8322240-7662-8E8F-7E32-3F262FB3330B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8322240-7662-8E8F-7E32-3F262FB3330B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E86D6751-F1D8-4EFA-A5E6-49B2C9137997}
+	EndGlobalSection
+EndGlobal
