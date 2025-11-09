@@ -19,6 +19,15 @@ public class Hooks
     {
         var options = new ChromeOptions();
         options.AddArgument("--start-maximized");
+
+        // options.AddUserProfilePreference("profile.password_manager_enabled", false);
+        // options.AddUserProfilePreference("credentials_enable_service", false);
+        // options.AddUserProfilePreference("autofill.profile_enabled", false);
+        // options.AddUserProfilePreference("autofill.credit_card_enabled", false);
+        // options.AddUserProfilePreference("autofill.password_manager_enabled", false);
+        // options.AddArgument("--disable-notifications");
+        // options.AddArgument("--disable-save-password-bubble");
+        // options.AddArgument("--password-store=basic");
         _driverHelp.Driver = new ChromeDriver(options);
     }
 

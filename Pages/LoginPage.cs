@@ -1,3 +1,4 @@
+using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 
@@ -11,6 +12,7 @@ public class LoginPage : BasePage
     private By PasswordInput => By.Id("password");
     private By LoginBtn => By.CssSelector("button[type='submit']");
     private By FlashBanner => By.Id("flash");
+    private By LogoutLocator => By.CssSelector("a > i");
 
 
     public void EnterLoginCredentials(string username, string password)
@@ -22,9 +24,15 @@ public class LoginPage : BasePage
 
     public void VerifySuccessfulLogin(string expectedSuccessText)
     {
+        Thread.Sleep(2000);
         var actualSuccessText = GetText(FlashBanner, 5);
         Assert.That(actualSuccessText.Contains(expectedSuccessText),
                    $"{actualSuccessText} does not contain expected : {expectedSuccessText}");
+    }
+
+    public void ClickLogout()
+    {
+        ClickElementByLocator(LogoutLocator);
     }
 
 }

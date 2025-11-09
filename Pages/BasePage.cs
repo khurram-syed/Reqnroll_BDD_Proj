@@ -16,19 +16,19 @@ public class BasePage
         _wait = new WaitHelper(driver);
     }
 
-    public void ClickElement(By locator, int waitTime=2) =>
-        _wait.GetVisibleElement(locator,waitTime).Click();
+    public void ClickElement(By locator, int waitTime = 2) =>
+        _wait.GetVisibleElement(locator, waitTime).Click();
 
-    public void EnterText(By locator, string text, int waitTime=2)
+    public void EnterText(By locator, string text, int waitTime = 2)
     {
-        var element = _wait.GetVisibleElement(locator,waitTime);
+        var element = _wait.GetVisibleElement(locator, waitTime);
         element.Clear();
         element.SendKeys(text);
     }
 
-        public string GetText(By locator, int waitTime=2)
+    public string GetText(By locator, int waitTime = 2)
     {
-        return _wait.GetVisibleElement(locator,waitTime).Text;
+        return _wait.GetVisibleElement(locator, waitTime).Text;
     }
 
     public bool CheckElementDisplayed(By locator)
@@ -48,4 +48,14 @@ public class BasePage
         _wait.GetVisibleElement(locator).Click();
     }
 
+    public void ClickLinkByText(string elementText)
+    {
+        By locator = By.XPath("//a[.='" + elementText + "']");
+        _wait.GetVisibleElement(locator).Click();
+    }
+
+    public void ClickElementByLocator(By locator)
+    {
+        _wait.GetVisibleElement(locator).Click();
+    }
 }

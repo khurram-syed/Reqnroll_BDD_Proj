@@ -1,5 +1,4 @@
 
-using System.ComponentModel;
 using MyReqnrollFirstProj.Helper;
 using MyReqnrollFirstProj.Pages;
 using OpenQA.Selenium;
@@ -33,8 +32,8 @@ public class LoginPageSteps
 
     }
 
-    [Then("I should see the login success message {string}")]
-    public void ThenIShouldSeeTheButton(string expectedSuccssMessage)
+    [Then("I should see the {word} success message {string}")]
+    public void ThenIShouldSeeTheButton(string word, string expectedSuccssMessage)
     {
         _loginPage.VerifySuccessfulLogin(expectedSuccssMessage);
     }

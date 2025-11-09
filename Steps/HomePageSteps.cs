@@ -14,12 +14,14 @@ public class HomePageSteps
     private string expectedTitle, expectedHeading;
     private HomePage _homePage;
     private AddRemoveElementPage AddRemoveElementPage;
+    private LoginPage _loginPage;
     
 
     public HomePageSteps(IReqnrollOutputHelper outputHelper, DriverHelper driverHelper)
     {
         _driver = driverHelper.Driver;
         _homePage = new HomePage(_driver);
+        _loginPage = new LoginPage(_driver);
         AddRemoveElementPage = new AddRemoveElementPage(_driver);
     }
 
@@ -61,7 +63,14 @@ public class HomePageSteps
     [When("I click on {string} button")]
     public void WhenIClickOnXButton(string elementText)
     {
-        _homePage.ClickElementByText(elementText);
+        if (elementText.Contains("Logout"))
+        {
+            _loginPage.ClickLogout();
+        }
+        else
+        {
+            _homePage.ClickElementByText(elementText);
+        }
     }
 
     [Then("I should see the {string} element")]
