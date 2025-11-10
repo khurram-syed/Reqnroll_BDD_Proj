@@ -52,19 +52,27 @@ Explanation: BDD style(Feature files implementation) has been followed for more 
   
   - Feature Files : "SearchCarDetails.feature" has been implemented the above scenario at following location
       > Features/Calculator.feature.  ==> Non-UI test [Won't initiate ChromeDriver]
+
       > Features/HomePage.feature.  ==> UI HomePage Tests
+
       > Features/LoginPage.feature. ==> UI LoginPage Tests
   
   - Step Definition : Feature file implementation is located at following location along with hooks
      >  Steps/CalculatorStepDefinitions.cs. 
+
      >  Steps/HomePageSteps.cs
+
      >  Steps/LoginPageSteps.cs
 
   - Hooks  : This got following hooks
       > [BeforeTestRun] : Initialising Report
+
       > [BeforeScenario("@ui")] : To Initialze Driver
+
       > [AfterScenario] : To add each step in the Extent Report
+      
       > [AfterScenario("@ui")] : To Capture the screenshot for failed step or add success step info to ExtentReport 
+  
   - POM (Page Object Model) Files : They have been implemented through Page Object Model. All the Page Objects are located at 
      >  Pages/AddRemoveElementPage.cs
      >  Pages/Basepage.cs
