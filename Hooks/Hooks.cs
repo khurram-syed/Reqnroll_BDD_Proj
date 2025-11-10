@@ -2,9 +2,15 @@ using System;
 using System.IO;
 using AventStack.ExtentReports;
 using MyReqnrollFirstProj.Helper;
+using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Safari;
 using Reqnroll;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
 namespace MyReqnrollFirstProj.Hooks;
 
@@ -32,9 +38,8 @@ public class Hooks
     [BeforeScenario("@ui")]
     public void BeforeScenario()
     {
-        var options = new ChromeOptions();
-        options.AddArgument("--start-maximized");
-        _driverHelp.Driver = new ChromeDriver(options);
+        var browserName = Environment.GetEnvironmentVariable("BROWSER") ?? "chrome";
+        _driverHelp.Driver = getWebDriver(browserName);
     }
 
     [AfterStep]
@@ -54,7 +59,7 @@ public class Hooks
             Directory.CreateDirectory(screenshotDir);
 
             var screenshot = ((ITakesScreenshot)_driverHelp.Driver).GetScreenshot();
-            
+
             var screenshotPath = Path.Combine(screenshotDir, $"{Guid.NewGuid()}.png");
             File.WriteAllBytes(screenshotPath, screenshot.AsByteArray);
 
@@ -68,10 +73,47 @@ public class Hooks
             _scenario.Pass("✅ - Scenario passed successfully");
         }
 
+        // Disposing off the Driver
         _driverHelp.Driver?.Quit();
         _driverHelp.Driver?.Dispose();
+
         // Writing the scenario in the HTML report
         ExtentManager.Instance.Flush();
         Console.WriteLine(" ✅  =============== AFTER SCENARIO - After Flush  ==========");
+    }
+
+    public IWebDriver getWebDriver(string browserName)
+    {
+        IWebDriver driver;
+        switch (browserName.ToLower())
+        {
+            case "chrome":
+                new DriverManager().SetUpDriver(new ChromeConfig());
+                var chromeOptions = new ChromeOptions();
+                chromeOptions.AddArgument("--start-maximized");
+                driver = new ChromeDriver(chromeOptions);
+                break;
+            case "firefox":
+                new DriverManager().SetUpDriver(new FirefoxConfig());
+                var firefoxOptions = new FirefoxOptions();
+                firefoxOptions.AddArgument("--width=1920");
+                firefoxOptions.AddArgument("--height=1080");
+                driver = new FirefoxDriver(firefoxOptions);
+                break;
+            case "edge":
+                new DriverManager().SetUpDriver(new EdgeConfig());
+                var edgOptions = new EdgeOptions();
+                edgOptions.AddArgument("--start-maximized");
+                driver = new EdgeDriver(edgOptions);
+                break;
+            case "safari":
+                driver = new SafariDriver();
+                break;
+            default:
+                throw new ArgumentException($"Unsupported browser: {browserName}");
+
+        }
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+        return driver;
     }
 }

@@ -12,26 +12,28 @@
       8- <PackageReference Include="Selenium.Support" Version="4.38.0" />
       9- <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
       10- <PackageReference Include="ExtentReports" Version="5.0.4" />
+      11- <PackageReference Include="WebDriverManager" Version="2.17.6" />
 
 
 RUN OPTIONS:
 
-1- It can be run either from commandline or IDE accordingly. 
+1- It can be run either from commandline or IDE(VS Code) accordingly. 
 
  
  (i) Tests can be run with following commandline Maven command
  
-   > dotnet build
    > dotnet test
  
   or
    
-   > dotnet test --filter "Category=scenario2"  
+   > dotnet test --filter "Category=scenario12"  
   
- *Note#1:* Chrome Driver for Windows & Mac has been provided at src/main/resources/drivers but please check the compatibility 
-       with your Chrome browser version accordingly.
+ **BROWSERS** :  
+ *Note#:* All Drivers can be invoked by following command. By default it would run in Chrome
+
+    > BROWWSER=firefox dotnet test --filter "Category=scenario12"  
  
- *Note#2:* You can also run in Firefox by changing "driverName" to "Firefox" in src/main/java/com/cardetailcheck/driver/SeleniumDriver.java file  
+
        
 **REPORTING** :   
 
@@ -49,12 +51,12 @@ Explanation: BDD style(Feature files implementation) has been followed for more 
             design pattern. 
   
   - Feature Files : "SearchCarDetails.feature" has been implemented the above scenario at following location
-      > Features/Calculator.feature
-      > Features/HomePage.feature
-      > Features/LoginPage.feature
+      > Features/Calculator.feature.  ==> Non-UI test [Won't initiate ChromeDriver]
+      > Features/HomePage.feature.  ==> UI HomePage Tests
+      > Features/LoginPage.feature. ==> UI LoginPage Tests
   
   - Step Definition : Feature file implementation is located at following location along with hooks
-     >  Steps/CalculatorStepDefinitions.cs
+     >  Steps/CalculatorStepDefinitions.cs. 
      >  Steps/HomePageSteps.cs
      >  Steps/LoginPageSteps.cs
 
@@ -70,5 +72,4 @@ Explanation: BDD style(Feature files implementation) has been followed for more 
      >  Pages/LoginPage.cs
   
 
-  - Test Fail/Pass Status : While Running through command line you'll see number of failures clear description in "Then" step
-   on console along with after following "AssertionError" description. For example
+
