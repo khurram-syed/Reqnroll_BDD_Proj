@@ -1,4 +1,4 @@
-@ui
+@ui @scenario2
 Feature: 2-Login Page Features
 As a login page user, I want to check login page features 
 so that I can use them confidently in future.
@@ -21,4 +21,4 @@ so that I can use them confidently in future.
       | Username | Password             |
       | tomsmith | SuperSecretPassword! |
     When I click on "Logout" button
-    Then I should see the logout success message "You logged out of the secure area!"
+    Then I should see the logout success message "You logged out of the secure areaxx"

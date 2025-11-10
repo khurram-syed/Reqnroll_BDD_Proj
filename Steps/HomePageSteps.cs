@@ -4,6 +4,7 @@ using MyReqnrollFirstProj.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
+using System;
 
 namespace MyReqnrollFirstProj.Steps;
 
@@ -15,20 +16,22 @@ public class HomePageSteps
     private HomePage _homePage;
     private AddRemoveElementPage AddRemoveElementPage;
     private LoginPage _loginPage;
-    
+    private ScenarioContext _scenarioContext;
+        
 
-    public HomePageSteps(IReqnrollOutputHelper outputHelper, DriverHelper driverHelper)
+    public HomePageSteps(ScenarioContext scenarioContext, DriverHelper driverHelper)
     {
         _driver = driverHelper.Driver;
         _homePage = new HomePage(_driver);
         _loginPage = new LoginPage(_driver);
+        _scenarioContext = scenarioContext;
         AddRemoveElementPage = new AddRemoveElementPage(_driver);
     }
 
     [Given("I have navigated to home page")]
     public void GivenIHaveNavigatedToHomePage()
     {
-        _driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/");
+        _driver.Navigate().GoToUrl(_scenarioContext["url"].ToString());
         Thread.Sleep(2000);
     }
 
@@ -46,6 +49,7 @@ public class HomePageSteps
         var actualHeading = _driver.FindElement(By.TagName("h1")).Text;
         Assert.That(actualTitle.Equals(expectedTitle));
         Assert.That(actualHeading.Contains(expectedHeading));
+        Console.WriteLine(" ✅  =============== TEST PASSED ==========");
     }
 
     [When("I navigated to the page {string} by clicking the link {string}")]

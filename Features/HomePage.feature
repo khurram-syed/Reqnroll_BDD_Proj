@@ -1,4 +1,4 @@
-@ui
+@ui @scenario1
 Feature: 1-HomePage Feature
 As a home page user, I want to check home page features 
 so that I can use them confidently in future.

@@ -24,7 +24,7 @@ public class LoginPage : BasePage
 
     public void VerifySuccessfulLogin(string expectedSuccessText)
     {
-        Thread.Sleep(2000);
+        Thread.Sleep(3000);
         var actualSuccessText = GetText(FlashBanner, 5);
         Assert.That(actualSuccessText.Contains(expectedSuccessText),
                    $"{actualSuccessText} does not contain expected : {expectedSuccessText}");

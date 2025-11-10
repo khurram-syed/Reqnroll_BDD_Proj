@@ -120,6 +120,7 @@ secrets.json
 publish/
 dist/
 deploy/
+Reports
 
 # Coverage tools
 coverage/
