@@ -81,14 +81,18 @@ Explanation: BDD style(Feature files implementation) has been followed for more 
    
    **API Tests**:
    -  API Tests and Corresponding Files: This has been implemented using HttpClient with NewtonSoft. Feature and Step definition files are
-     >  Features/ApiTests.feature
-     > Steps/ApiSteps.cs
-     > Steps/ApiSteps2.cs
+       >  Features/ApiTests.feature
+
+       >  Steps/ApiSteps.cs
+     
+       >  Steps/ApiSteps2.cs
   
     
   -  API Models and APIClient Helper files are
      >  Helper/APIClientHelper.cs
+     
      >  Models/ApiRecords.cs
+     
      >  Post.cs
   
 
