@@ -2,26 +2,28 @@
 **PROJECT CONFIGURATION :**
     
     - The Porject has been developed With following C# Reqnroll  dependencies/tools
-      1- <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-      2- <PackageReference Include="Reqnroll" Version="3.2.1" />
-      3- <PackageReference Include="Reqnroll.NUnit" Version="3.2.1" />
-      4- <PackageReference Include="nunit" Version="4.0.1" />
-      5- <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-      6- <PackageReference Include="FluentAssertions" Version="6.12.0" />
-      7- <PackageReference Include="Selenium.WebDriver" Version="4.38.0" />
-      8- <PackageReference Include="Selenium.Support" Version="4.38.0" />
-      9- <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
-      10- <PackageReference Include="ExtentReports" Version="5.0.4" />
-      11- <PackageReference Include="WebDriverManager" Version="2.17.6" />
+      1- Microsoft.NET.Test.Sdk" Version="17.8.0"
+      2- "Reqnroll" Version="3.2.1"
+      3- "Reqnroll.NUnit" Version="3.2.1"
+      4- "nunit" Version="4.0.1"
+      5- "NUnit3TestAdapter" Version="4.5.0"
+      6- "FluentAssertions" Version="6.12.0"
+      7- "Selenium.WebDriver" Version="4.38.0"
+      8- "Selenium.Support" Version="4.38.0"
+      9- "DotNetSeleniumExtras.WaitHelpers" Version="3.11.0"
+      10- "ExtentReports" Version="5.0.4"
+      11- "WebDriverManager" Version="2.17.6"
 
 
 RUN OPTIONS:
 
-1- It can be run either from commandline or IDE(VS Code) accordingly. 
+1- It can be run either from commandline or IDE(VS Code or Visual Sutdio) accordingly. 
 
  
  (i) Tests can be run with following commandline Maven command
  
+   > dotnet build
+
    > dotnet test
  
   or
@@ -75,11 +77,18 @@ Explanation: BDD style(Feature files implementation) has been followed for more 
   
   - POM (Page Object Model) Files : They have been implemented through Page Object Model. All the Page Objects are located at 
      >  Pages/AddRemoveElementPage.cs
-     >  Pages/Basepage.cs
-     >  Pages/HomePage.cs
-     >  Pages/LoginPage.cs
+     
+     > Pages/Basepage.cs
+     
+     > Pages/HomePage.cs
+     
+     > Pages/LoginPage.cs
    
-   **API Tests**:
+ 
+ 
+   **API Tests**: 
+  
+   They are written to verify various HTTP Methods GET/POST/PUT/DELETE for the resource /posts against the baseURL : https://jsonplaceholder.typicode.com/
    -  API Tests and Corresponding Files: This has been implemented using HttpClient with NewtonSoft. Feature and Step definition files are
        >  Features/ApiTests.feature
 
