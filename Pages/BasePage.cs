@@ -8,7 +8,6 @@ public class BasePage
     protected readonly IWebDriver _driver;
     protected readonly WaitHelper _wait;
 
-    private By SubPageHeading => By.TagName("h3");
 
     public BasePage(IWebDriver driver)
     {

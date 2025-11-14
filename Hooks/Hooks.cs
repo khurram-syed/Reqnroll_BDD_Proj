@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using AventStack.ExtentReports;
 using MyReqnrollFirstProj.Helper;
-using NUnit.Framework.Internal;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
@@ -47,6 +46,23 @@ public class Hooks
     {
         var stepInfo = _scenarioContext.StepContext.StepInfo.Text;
         _scenario.Log(Status.Info, $"Step : {stepInfo}");
+    }
+
+    [AfterScenario("@api")]
+    public void AfterScenarioAPI()
+    {
+        if (_scenarioContext.TestError != null)
+        {
+            _scenario.Fail("❌ - Scenario Failed..!!");
+        }
+        else
+        {
+            _scenario.Pass("✅ - Scenario passed successfully");
+        }
+
+        // Writing the scenario in the HTML report
+        ExtentManager.Instance.Flush();
+        Console.WriteLine(" ✅  =============== AFTER SCENARIO - After Flush  ==========");
     }
 
     [AfterScenario("@ui")]
