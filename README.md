@@ -52,7 +52,7 @@ TASK : There are Three Feature files .
 Explanation: BDD style(Feature files implementation) has been followed for more readability along with POM(Page Object Model) 
             design pattern. 
   
-  - Feature Files : "SearchCarDetails.feature" has been implemented the above scenario at following location
+  - Feature Files : Following UI features has been implemented with the following location
       > Features/Calculator.feature.  ==> Non-UI test [Won't initiate ChromeDriver]
 
       > Features/HomePage.feature.  ==> UI HomePage Tests
