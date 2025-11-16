@@ -117,6 +117,13 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ExtentReport
-        path: |
-          Reports/**/*.html
-        retention-days: 7
+        path: Reports/*.html
+  
+    - name: Upload Screenshots
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: Screenshots
+        path: Reports/Screenshots/*.png
+
+
