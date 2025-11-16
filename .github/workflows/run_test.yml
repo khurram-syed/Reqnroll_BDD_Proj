@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 
-  # ✅ Manual trigger with user inputs
+  # Manual trigger with user inputs
   workflow_dispatch:
     inputs:
       browser:
@@ -59,13 +59,35 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
 
-    # 🧠 Build the dotnet test command dynamically based on inputs
+    # Build the dotnet test command dynamically based on inputs
     - name: Run Tests (Generate Extent Report)
       run: |
         echo "Running tests with:"
         echo "Browser: ${{ github.event.inputs.browser }}"
         echo "Category: ${{ github.event.inputs.category }}"
         echo "Environment: ${{ github.event.inputs.environment }}"
+        
+        #Defaults when triggered by Push/PR (inputs will be empty)
+        BROWSER_VALUE="${{github.event.inputs.browser}}"
+        ENV_VALUE="${{github.event.inputs.environment}}"
+        CATEGORY_VALUE=${{github.event.inputs.category}}
+
+        # If browser input is empty => default chrome
+        if [ -z "$BROWSER_VALUE" ]; then
+          BROWSER_VALUE="chrome"
+        fi
+        # If Env input is empty => default dev
+        if [ -z "$ENV_VALUE" ]; then
+          ENV_VALUE="dev"
+        fi
+        # If category filter input is empty => default all
+        if [ -z "$CATEGORY_VALUE" ]; then
+          ENV_VALUE="all"
+        fi
+
+        echo "Using Browser: $BROWSER_VALUE"
+        echo "Using Env : $ENV_VALUE"
+        echo "Using Filter: $CATEGORY_VALUE"
 
         # Build category filter
         if [ "${{ github.event.inputs.category }}" = "all" ]; then
@@ -74,9 +96,10 @@ jobs:
           CATEGORY_FILTER="--filter Category=${{ github.event.inputs.category }}"
         fi
 
+
         # Export browser + environment as env variables used by the framework
-        export BROWSER=${{ github.event.inputs.browser }}
-        export ENVIRONMENT=${{ github.event.inputs.environment }}
+        export BROWSER="$BROWSER_VALUE"
+        export ENVIRONMENT="$ENV_VALUE"
 
         # Execute tests
         dotnet test $CATEGORY_FILTER --configuration Release --no-build
