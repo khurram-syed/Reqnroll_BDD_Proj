@@ -1,0 +1,40 @@
+name: Run BDD Tests and Publish Extent Report
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'    # or 7.0.x based on your framework
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build project
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run Tests (Generate Extent Report)
+      run: dotnet test --configuration Release --no-build
+
+    # 👇 IMPORTANT: Upload the Extent Report from /Reports/
+    - name: Publish Extent HTML Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: ExtentReport
+        path: |
+          Reports/*.html
+          Reports/**/*.html
+        retention-days: 7
