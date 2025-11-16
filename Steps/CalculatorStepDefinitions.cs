@@ -5,10 +5,9 @@ using Reqnroll;
 namespace MyReqnrollFirstProj.Steps;
 
 [Binding]
-public sealed class CalculatorStepDefinitions
+public class CalculatorStepDefinitions
 {
-    // For additional details on Reqnroll step definitions see https://go.reqnroll.net/doc-stepdef
-
+    
     int firstNumber = 0;
     int secondNumber = 0;
 

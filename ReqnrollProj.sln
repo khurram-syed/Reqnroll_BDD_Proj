@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyReqnrollFirstProj", "MyReqnrollFirstProj.csproj", "{F8322240-7662-8E8F-7E32-3F262FB3330B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReqnrollProj", "ReqnrollProj.csproj", "{F8322240-7662-8E8F-7E32-3F262FB3330B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
