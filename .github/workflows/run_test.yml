@@ -5,7 +5,39 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+  # ✅ Manual trigger with user inputs
   workflow_dispatch:
+    inputs:
+      browser:
+        description: "Which browser do you want to run the UI tests on?"
+        required: false
+        default: "chrome"
+        type: choice
+        options:
+          - chrome
+          - firefox
+          - edge
+
+      category:
+        description: "Test Category to run"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - ui
+          - api
+
+      environment:
+        description: "Environment to test against"
+        required: false
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
 
 jobs:
   test:
@@ -13,12 +45,12 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'    # or 7.0.x based on your framework
+        dotnet-version: '8.0.x'   # change to match your framework
 
     - name: Restore dependencies
       run: dotnet restore
@@ -26,15 +58,34 @@ jobs:
     - name: Build project
       run: dotnet build --configuration Release --no-restore
 
-    - name: Run Tests (Generate Extent Report)
-      run: dotnet test --configuration Release --no-build
 
-    # 👇 IMPORTANT: Upload the Extent Report from /Reports/
+    # 🧠 Build the dotnet test command dynamically based on inputs
+    - name: Run Tests (Generate Extent Report)
+      run: |
+        echo "Running tests with:"
+        echo "Browser: ${{ github.event.inputs.browser }}"
+        echo "Category: ${{ github.event.inputs.category }}"
+        echo "Environment: ${{ github.event.inputs.environment }}"
+
+        # Build category filter
+        if [ "${{ github.event.inputs.category }}" = "all" ]; then
+          CATEGORY_FILTER=""
+        else
+          CATEGORY_FILTER="--filter Category=${{ github.event.inputs.category }}"
+        fi
+
+        # Export browser + environment as env variables used by the framework
+        export BROWSER=${{ github.event.inputs.browser }}
+        export ENVIRONMENT=${{ github.event.inputs.environment }}
+
+        # Execute tests
+        dotnet test $CATEGORY_FILTER --configuration Release --no-build
+
+    # ✔ FIXED: Updated artifact action to v4
     - name: Publish Extent HTML Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ExtentReport
         path: |
-          Reports/*.html
           Reports/**/*.html
         retention-days: 7
