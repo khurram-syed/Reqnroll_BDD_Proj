@@ -96,27 +96,63 @@ public class Hooks
 
     public IWebDriver getWebDriver(string browserName)
     {
+        // Detect if running on CI environment (GitHub Actions)
+        bool isCI = Environment.GetEnvironmentVariable("GITHUB_ACTIONS") == "true";
+
         IWebDriver driver;
         switch (browserName.ToLower())
         {
             case "chrome":
                 new DriverManager().SetUpDriver(new ChromeConfig());
                 var chromeOptions = new ChromeOptions();
-                chromeOptions.AddArgument("--start-maximized");
+                if (isCI)
+                {
+                    // Required for Github Actions Linux runner
+                    chromeOptions.AddArgument("--headless=new");
+                    chromeOptions.AddArgument("--no-sandbox");
+                    chromeOptions.AddArgument("--disable-dev-shm-usage");
+                    chromeOptions.AddArgument("--disable-gpu");
+                    chromeOptions.AddArgument("--window-size=1920,1080");
+                    chromeOptions.AddArgument("--remote-debugging-port=9222");
+                }
+                else
+                {
+                    chromeOptions.AddArgument("--start-maximized");
+                }
                 driver = new ChromeDriver(chromeOptions);
                 break;
             case "firefox":
                 new DriverManager().SetUpDriver(new FirefoxConfig());
                 var firefoxOptions = new FirefoxOptions();
-                firefoxOptions.AddArgument("--width=1920");
-                firefoxOptions.AddArgument("--height=1080");
+                if (isCI)
+                {
+                    firefoxOptions.AddArgument("--headless");
+                    firefoxOptions.AddArgument("--width=1920");
+                    firefoxOptions.AddArgument("--height=1080");
+                }
+                else
+                {
+                    firefoxOptions.AddArgument("--width=1920");
+                    firefoxOptions.AddArgument("--height=1080");
+                }
                 driver = new FirefoxDriver(firefoxOptions);
                 break;
             case "edge":
                 new DriverManager().SetUpDriver(new EdgeConfig());
-                var edgOptions = new EdgeOptions();
-                edgOptions.AddArgument("--start-maximized");
-                driver = new EdgeDriver(edgOptions);
+                var edgeOptions = new EdgeOptions();
+                if (isCI)
+                {
+                    edgeOptions.AddArgument("--headless=new");
+                    edgeOptions.AddArgument("--no-sandbox");
+                    edgeOptions.AddArgument("--disable-dev-shm-usage");
+                    edgeOptions.AddArgument("--disable-gpu");
+                    edgeOptions.AddArgument("--window-size=1920,1080");
+                }
+                else
+                {
+                    edgeOptions.AddArgument("--start-maximized");
+                }
+                driver = new EdgeDriver(edgeOptions);
                 break;
             case "safari":
                 driver = new SafariDriver();
