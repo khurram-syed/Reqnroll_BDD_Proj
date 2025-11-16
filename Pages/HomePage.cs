@@ -7,15 +7,12 @@ namespace MyReqnrollFirstProj.Pages;
 public class HomePage : BasePage
 {
 
-    private By OtherPageHeadingH3 => By.TagName("h3");
-    private By OtherPageHeadingH2 => By.TagName("h2");
-    private By LinkText(string linkText) => By.LinkText(linkText);
-
     public HomePage(IWebDriver driver) : base(driver) { }
 
-    public void OpneLink(string linkText)
+   
+    public void OpenHomePage(string url)
     {
-        _wait.GetVisibleElement(By.LinkText(linkText)).Click();
+        _driver.Navigate().GoToUrl(url);
     }
 
     public void checkTitleAndHeading(string expectedTitle, string expectedHeading)
@@ -26,12 +23,4 @@ public class HomePage : BasePage
         Assert.That(actualHeading.Contains(expectedHeading), $"{actualHeading} : is not equal to : {expectedHeading}");
     }
 
-    public void OpenAndNavigateToPage(string linkText, string expectedPageHeading)
-    {
-        ClickElement(LinkText(linkText), 3);
-        By locator = expectedPageHeading.Contains("Login") ? OtherPageHeadingH2 : OtherPageHeadingH3;
-
-        var actualPageHeading = GetText(locator);
-        Assert.That(actualPageHeading.Contains(expectedPageHeading));
-    }
 }

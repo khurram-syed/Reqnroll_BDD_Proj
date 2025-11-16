@@ -7,7 +7,7 @@ so that I can use them confidently in future.
   Scenario: 11-Verifying HomePage Heading and Title
     Given I have navigated to home page
     When I check title "The Internet" and heading "Welcome to the-internet"
-    Then I should see them exactly the same
+    Then I should see them exactly the same as mentioned above
 
   @scenario12
   Scenario: 12-Verifying Adding and Removing Elements

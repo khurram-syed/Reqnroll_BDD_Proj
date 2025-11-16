@@ -106,3 +106,36 @@ Explanation: BDD style(Feature files implementation) has been followed for more 
   
 
 
+**Visual EXPLAINATION**:
+
+                    +--------------------------+
+                    |        Feature Files     |
+                    |  (Gherkin: Given/When)   |
+                    +------------+-------------+
+                                 |
+                                 v
+                     +-----------+--------------+
+                     |     Step Definitions     |
+                     | (Glue between BDD & Code)|
+                     +-----------+--------------+
+                                 |
+               +-----------------+-----------------+
+               |                                   |
+               v                                   v
+     +-------------------+               +-------------------+
+     |   UI Automation   |               |   API Automation  |
+     |     (POM)         |               | (HttpClient DTOs) |
+     +---------+---------+               +---------+---------+
+               |                                   |
+               v                                   v
+     +------------------------+          +--------------------+
+     |   Selenium WebDriver   |          |    APIClientHelper |
+     | (Chrome, Firefox, Edge)|          | (GET/POST/PUT/DEL) |
+     +------------------------+          +--------------------+
+                     \                       /
+                      \                     /
+                       v                   v
+                      +---------------------+
+                      |    Extent Reports   |
+                      | (Screenshots, Logs) |
+                      +---------------------+

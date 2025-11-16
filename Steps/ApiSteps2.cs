@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using MyReqnrollFirstProj.Helper;
 using MyReqnrollFirstProj.Models;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using Reqnroll;
 
@@ -23,11 +21,10 @@ public class ApiSteps2
     {
         _scenarioContext = scenarioContext;
         _apiClient = new APIClientHelper();
-        // _httpResponseMsg = new HttpResponseMessage();
     }
 
     [Then("I should see the following records with corresponding values")]
-    public async Task ThenIShouldSeeResponseStatus(DataTable table)
+    public void ThenIShouldSeeResponseStatus(DataTable table)
     {
         // Getting the postObjs from ApiStep1.cs using scenarioContext
         var posts = (List<Post>)_scenarioContext["postObjs"];

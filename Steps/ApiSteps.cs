@@ -26,7 +26,7 @@ public class ApiSteps
         _apiClient = new APIClientHelper();
     }
 
-    [When("I send a GET request to {string}")]
+    [When("I send a GET request to {string} endpoint")]
     public async Task WhenISendAGETRequestTo(string endpoint)
     {
         _response = await _apiClient.GetAsync(endpoint);
@@ -48,7 +48,7 @@ public class ApiSteps
         Console.WriteLine($"Count : {postObjs.Count}");
     }
 
-    [When("I send a POST request to {string} with following values")]
+    [When("I send a POST request to {string} endpoint with following values")]
     public async Task WhenISendAPOSTRequestToWithFollowingValues(string endpoint, DataTable dataTable)
     {
         var records = dataTable.CreateSet<(string Title, string Body)> ().ToArray();
@@ -93,7 +93,7 @@ public class ApiSteps
         Console.WriteLine($" Post Id : {post.Id}");
     }
 
-    [When("I send a PUT request to {string} with title {string}")]
+    [When("I send a PUT request to {string} endpoint with title {string}")]
     public async Task WhenISendAGETRequestTo(string endpoint, string updatedTitle)
     {
         int id = int.Parse(endpoint.Split("/")[1]);
@@ -109,7 +109,7 @@ public class ApiSteps
         Console.WriteLine($"Actual StatusCode: {_response.StatusCode}");
     }
 
-    [When("I send a DELETE request to {string}")]
+    [When("I send a DELETE request to {string} endpoint")]
     public async Task WhenISendADELETERequestTo(string endpoint)
     {
         _response = await _apiClient.DeleteAsync(endpoint);

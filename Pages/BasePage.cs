@@ -1,4 +1,5 @@
 using MyReqnrollFirstProj.Helper;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace MyReqnrollFirstProj.Pages;
@@ -7,6 +8,9 @@ public class BasePage
 {
     protected readonly IWebDriver _driver;
     protected readonly WaitHelper _wait;
+    protected By LinkText(string linkText) => By.LinkText(linkText);
+    protected By OtherPageHeadingH3 => By.TagName("h3");
+    protected By OtherPageHeadingH2 => By.TagName("h2");
 
 
     public BasePage(IWebDriver driver)
@@ -57,4 +61,19 @@ public class BasePage
     {
         _wait.GetVisibleElement(locator).Click();
     }
+
+    public void OpneLink(string linkText)
+    {
+        _wait.GetVisibleElement(By.LinkText(linkText)).Click();
+    }
+
+    public void OpenLinkToPage(string linkText, string expectedPageHeading)
+    {
+        ClickElement(LinkText(linkText), 3);
+        By locator = expectedPageHeading.Contains("Login") ? OtherPageHeadingH2 : OtherPageHeadingH3;
+
+        var actualPageHeading = GetText(locator);
+        Assert.That(actualPageHeading.Contains(expectedPageHeading));
+    }
+
 }

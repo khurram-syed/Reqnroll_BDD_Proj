@@ -48,26 +48,22 @@ public class Hooks
         _scenario.Log(Status.Info, $"Step : {stepInfo}");
     }
 
-    [AfterScenario("@api")]
+    [AfterScenario]
     public void AfterScenarioAPI()
     {
-        if (_scenarioContext.TestError != null)
+        if (_scenarioContext.TestError == null)
         {
-            _scenario.Fail("❌ - Scenario Failed..!!");
-        }
-        else
-        {
-            _scenario.Pass("✅ - Scenario passed successfully");
+            _scenario.Pass("✅ - Scenario passed successfully in non-@ui ");
+            DisposingAndFlushingReport();
         }
 
-        // Writing the scenario in the HTML report
-        ExtentManager.Instance.Flush();
-        Console.WriteLine(" ✅  =============== AFTER SCENARIO - After Flush  ==========");
+       
     }
 
     [AfterScenario("@ui")]
     public void AfterScenario()
     {
+
         if (_scenarioContext.TestError != null)
         {
             var projectRoot = AppContext.BaseDirectory.Split("bin")[0];
@@ -83,19 +79,19 @@ public class Hooks
             var relativePath = Path.GetRelativePath(Path.Combine(projectRoot, "Reports"), screenshotPath);
             _scenario.Fail(_scenarioContext.TestError.Message)
                      .AddScreenCaptureFromPath(relativePath);
+            DisposingAndFlushingReport();
         }
-        else
-        {
-            _scenario.Pass("✅ - Scenario passed successfully");
-        }
+    }
 
+    private void DisposingAndFlushingReport()
+    {
         // Disposing off the Driver
         _driverHelp.Driver?.Quit();
         _driverHelp.Driver?.Dispose();
 
         // Writing the scenario in the HTML report
         ExtentManager.Instance.Flush();
-        Console.WriteLine(" ✅  =============== AFTER SCENARIO - After Flush  ==========");
+        Console.WriteLine(" ✅  =============== AFTER SCENARIO - Flush to Report  ==========");
     }
 
     public IWebDriver getWebDriver(string browserName)

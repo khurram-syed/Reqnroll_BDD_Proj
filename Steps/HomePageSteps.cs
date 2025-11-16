@@ -1,10 +1,8 @@
-using System.Threading;
 using MyReqnrollFirstProj.Helper;
 using MyReqnrollFirstProj.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using Reqnroll;
-using System;
 
 namespace MyReqnrollFirstProj.Steps;
 
@@ -14,6 +12,7 @@ public class HomePageSteps
     private readonly IWebDriver _driver;
     private string expectedTitle, expectedHeading;
     private HomePage _homePage;
+    private BasePage _basePage;
     private AddRemoveElementPage AddRemoveElementPage;
     private LoginPage _loginPage;
     private ScenarioContext _scenarioContext;
@@ -22,6 +21,7 @@ public class HomePageSteps
     public HomePageSteps(ScenarioContext scenarioContext, DriverHelper driverHelper)
     {
         _driver = driverHelper.Driver;
+        _basePage = new BasePage(_driver);
         _homePage = new HomePage(_driver);
         _loginPage = new LoginPage(_driver);
         _scenarioContext = scenarioContext;
@@ -31,8 +31,7 @@ public class HomePageSteps
     [Given("I have navigated to home page")]
     public void GivenIHaveNavigatedToHomePage()
     {
-        _driver.Navigate().GoToUrl(_scenarioContext["url"].ToString());
-        Thread.Sleep(2000);
+        _homePage.OpenHomePage(_scenarioContext["url"].ToString());
     }
 
     [When("I check title {string} and heading {string}")]
@@ -42,26 +41,25 @@ public class HomePageSteps
         expectedHeading = heading;
     }
 
-    [Then("I should see them exactly the same")]
+    [Then("I should see them exactly the same as mentioned above")]
     public void ThenIShouldSeeThemExactlyTheSame_()
     {
         var actualTitle = _driver.Title;
         var actualHeading = _driver.FindElement(By.TagName("h1")).Text;
         Assert.That(actualTitle.Equals(expectedTitle));
-        Assert.That(actualHeading.Contains(expectedHeading));
-        Console.WriteLine(" ✅  =============== TEST PASSED ==========");
+        Assert.That(actualHeading.Equals(expectedHeading));
     }
 
     [When("I navigated to the page {string} by clicking the link {string}")]
     public void WhenINavigatedToThePageByClickingTheLink(string expectedHeading, string linkText)
     {
-        _homePage.OpenAndNavigateToPage(linkText, expectedHeading);
+        _homePage.OpenLinkToPage(linkText, expectedHeading);
     }
 
     [Then("I should see the button with text {string}")]
     public void ThenIShouldSeeTheButton(string btnText)
     {
-        _homePage.CheckElementDisplayedByText(btnText);
+        _basePage.CheckElementDisplayedByText(btnText);
     }
 
     [When("I click on {string} button")]
