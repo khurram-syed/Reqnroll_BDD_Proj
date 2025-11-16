@@ -59,50 +59,47 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
 
-    # Build the dotnet test command dynamically based on inputs
     - name: Run Tests (Generate Extent Report)
+      shell: bash
       run: |
         echo "Running tests with:"
-        echo "Browser: ${{ github.event.inputs.browser }}"
-        echo "Category: ${{ github.event.inputs.category }}"
-        echo "Environment: ${{ github.event.inputs.environment }}"
-        
-        #Defaults when triggered by Push/PR (inputs will be empty)
-        BROWSER_VALUE="${{github.event.inputs.browser}}"
-        ENV_VALUE="${{github.event.inputs.environment}}"
-        CATEGORY_VALUE=${{github.event.inputs.category}}
+        echo "Browser: '${{ github.event.inputs.browser }}'"
+        echo "Category: '${{ github.event.inputs.category }}'"
+        echo "Environment: '${{ github.event.inputs.environment }}'"
 
-        # If browser input is empty => default chrome
+        # Assign inputs from GitHub workflow_dispatch
+        BROWSER_VALUE="${{ github.event.inputs.browser }}"
+        CATEGORY_VALUE="${{ github.event.inputs.category }}"
+        ENV_VALUE="${{ github.event.inputs.environment }}"
+
+        # Set real defaults when triggered by push/PR
         if [ -z "$BROWSER_VALUE" ]; then
           BROWSER_VALUE="chrome"
         fi
-        # If Env input is empty => default dev
         if [ -z "$ENV_VALUE" ]; then
           ENV_VALUE="dev"
         fi
-        # If category filter input is empty => default all
-        if [ -z "$CATEGORY_VALUE" ]; then
-          ENV_VALUE="all"
+
+        # CATEGORY FILTER LOGIC (100% SAFE)
+        if [ -z "$CATEGORY_VALUE" ] || [ "$CATEGORY_VALUE" = "all" ]; then
+          CATEGORY_FILTER=""
+        else
+          CATEGORY_FILTER="--filter Category=$CATEGORY_VALUE"
         fi
 
         echo "Using Browser: $BROWSER_VALUE"
-        echo "Using Env : $ENV_VALUE"
-        echo "Using Filter: $CATEGORY_VALUE"
+        echo "Using Environment: $ENV_VALUE"
+        echo "Using Filter: '$CATEGORY_FILTER'"
 
-        # Build category filter
-        if [ "${{ github.event.inputs.category }}" = "all" ]; then
-          CATEGORY_FILTER=""
+        export BROWSER=$BROWSER_VALUE
+        export ENVIRONMENT=$ENV_VALUE
+
+        # Safely run dotnet test
+        if [ -z "$CATEGORY_FILTER" ]; then
+          dotnet test --configuration Release --no-build
         else
-          CATEGORY_FILTER="--filter Category=${{ github.event.inputs.category }}"
+          dotnet test $CATEGORY_FILTER --configuration Release --no-build
         fi
-
-
-        # Export browser + environment as env variables used by the framework
-        export BROWSER="$BROWSER_VALUE"
-        export ENVIRONMENT="$ENV_VALUE"
-
-        # Execute tests
-        dotnet test $CATEGORY_FILTER --configuration Release --no-build
 
     # ✔ FIXED: Updated artifact action to v4
     - name: Publish Extent HTML Report
