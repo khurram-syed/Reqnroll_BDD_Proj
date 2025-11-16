@@ -1,9 +1,9 @@
-@ui @scenario1
+@ui @scenario1 @all
 Feature: 1-HomePage Feature
 As a home page user, I want to check home page features 
 so that I can use them confidently in future.
 
-  @scenario11
+  @scenario11 @smoke
   Scenario: 11-Verifying HomePage Heading and Title
     Given I have navigated to home page
     When I check title "The Internet" and heading "Welcome to the-internet"

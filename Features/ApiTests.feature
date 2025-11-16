@@ -1,8 +1,8 @@
-@api @scenario3
+@api @scenario3 @all
 Feature: 3-API Tests
 As a app user, I want to test various HTTP Methods GET,PUT,POST,Delete for /posts end point,
 so I can use them confidently
-
+  @smoke  
   Scenario: 31- Get all posts
     When I send a GET request to "posts" endpoint
     Then I should see response status 200 for GET
@@ -10,7 +10,7 @@ so I can use them confidently
       | RecordNo | UserId | Id |
       |        1 |      1 |  1 |
       |        3 |      3 |  3 |
-
+  @smoke
   Scenario: 32- POST a new post
     When I send a POST request to "posts" endpoint with following values
       | Title     | Body                |

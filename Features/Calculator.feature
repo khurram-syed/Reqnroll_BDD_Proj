@@ -1,3 +1,4 @@
+@all
 Feature: 0-Calculator
 	Simple calculator for adding two numbers without UI
 
